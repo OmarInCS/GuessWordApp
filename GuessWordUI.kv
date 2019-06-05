@@ -1,0 +1,131 @@
+
+<GuessWord>:
+
+<GuessWord>:
+    lb_msg: lb_msg
+    rv_words: rv_words
+    pb_score: pb_score
+    orientation: 'vertical'
+    padding: 2
+    spacing: 2
+    Label:
+        text: str(int(pb_score.value))
+        size_hint_y: 0.1
+        font_size: self.height/2
+    ProgressBar:
+        id: pb_score
+        size_hint_y: 0.1
+        max: 500
+        value: 0
+    Label:
+        id: lb_msg
+        size_hint_y: 0.1
+        text: "Guess The Word"
+        font_size: self.height/2
+    RecycleView:
+        id: rv_words
+        size_hint_y: 0.2
+        data: root.populateData()
+        viewclass: "Cell"
+        RecycleBoxLayout:
+            default_size_hint: 1, None
+            orientation: 'horizontal'
+            spacing: 5
+            padding: 5
+    Label:
+        size_hint_y: 0.2
+    TabBar:
+
+
+<TabBar@BoxLayout>:
+    orientation: "horizontal"
+    padding: [0, 0, 0, 5]
+    size_hint_y: 0.3
+    Label:
+    BoxLayout:
+        size_hint: None, None
+        size: self.parent.height/3, self.parent.height/3
+        canvas:
+            Color:
+                rgb: (241/256, 196/256, 15/256)
+            Ellipse:
+                pos: self.center_x - self.height/2, self.center_y - self.height/2
+                size: self.height, self.height
+                angle_start: 0
+                angle_end: 360
+        Button:
+            id: bt_again
+            size_hint: None, None
+            size: self.parent.height, self.parent.height
+            background_color: 0, 0, 0, 0
+            text: 'Play\nAgain'
+            halign: "center"
+            font_size: self.height/5
+            on_press: app.root.playAgain()
+    Label:
+    BoxLayout:
+        size_hint: None, None
+        size: self.parent.height/3, self.parent.height/3
+        canvas:
+            Color:
+                rgb: (52/256, 152/256, 219/256)
+            Ellipse:
+                pos: self.center_x - self.height/2, self.center_y - self.height/2
+                size: self.height, self.height
+                angle_start: 0
+                angle_end: 360
+        Button:
+            id: bt_answer
+            size_hint: None, None
+            size: self.parent.height, self.parent.height
+            background_color: 0, 0, 0, 0
+            text: 'Show\nAnswer'
+            halign: "center"
+            font_size: self.height/5
+            on_press: app.root.showAnswer()
+    Label:
+    BoxLayout:
+        size_hint: None, None
+        size: self.parent.height/3, self.parent.height/3
+        canvas:
+            Color:
+                rgb: (46/256, 204/256, 113/256)
+            Ellipse:
+                pos: self.center_x - self.height/2, self.center_y - self.height/2
+                size: self.height, self.height
+                angle_start: 0
+                angle_end: 360
+        Button:
+            id: bt_check
+            size_hint: None, None
+            size: self.parent.height, self.parent.height
+            background_color: 0, 0, 0, 0
+            text: 'Check\nAnswer'
+            halign: "center"
+            font_size: self.height/5
+            on_press: app.root.checkAnswer()
+    Label:
+
+
+<Cell>:
+    text: ""
+    bg_color: 1, 1, 1
+    canvas.before:
+        Color:
+            rgb: root.bg_color
+        RoundedRectangle:
+            pos: root.x, root.y
+            size: root.width, root.height
+            radius: [10]
+    TextInput:
+        text: root.text
+        background_color: 0,0,0,0
+        halign: "center"
+        multiline: False
+        padding: [2, self.height / 2.0 - self.line_height / 2.0]
+        font_size: self.height/2
+        write_tab: False
+        on_text: root.didSelectCell(root.idx, app.root.mutatedWord)
+        on_text_validate: app.root.checkAnswer()
+
+
