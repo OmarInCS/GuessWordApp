@@ -58,10 +58,10 @@
             size_hint: None, None
             size: self.parent.height, self.parent.height
             background_color: 0, 0, 0, 0
-            text: 'Play\nAgain'
+            text: 'Restart\nGame'
             halign: "center"
             font_size: self.height/5
-            on_press: app.root.playAgain()
+            on_press: app.root.restartGame()
     Label:
     BoxLayout:
         size_hint: None, None
@@ -129,3 +129,14 @@
         on_text_validate: app.root.checkAnswer()
 
 
+<MyPopup>:
+    title: "Warning!!"
+    size_hint: 0.4, 0.4
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "You will lose 25 point"
+        Button:
+            text: 'Accept'
+            size_hint_y: 0.2
+            on_release: app.root.confirmShowAnswer(root)

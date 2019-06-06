@@ -8,6 +8,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
 from kivy.uix.progressbar import ProgressBar
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.textinput import TextInput
@@ -31,17 +32,31 @@ class GuessWord(BoxLayout):
         mutatedWord[idx] = ""
 
     def checkAnswer(self):
-        if self.word == self.mutatedWord:
-            self.lb_msg.text = "You got it right"
+        if "".join(self.mutatedWord) in self.words:
             self.pb_score.value += 10
-        else:
+            self.playAgain()
+        elif self.pb_score.value >= 5:
             self.lb_msg.text = "Wrong, try again"
+            self.pb_score.value -= 5
+        else:
+            self.lb_msg.text = "Game Over!!"
         Window.release_all_keyboards()
 
     def showAnswer(self):
+        if self.pb_score.value >= 25:
+            popup = MyPopup()
+        else:
+            popup = Popup(title='Warning!', content=Label(text="You don't have enough points"))
+            popup.size_hint = 0.4, 0.4
+
+        popup.open()
+
+
+    def confirmShowAnswer(self, popup:Popup):
         self.mutatedWord = self.word
         self.rv_words.data = self.populateData()
-
+        self.pb_score.value -= 25
+        popup.dismiss()
 
     def playAgain(self):
         self.lb_msg.text = "Guess The Word"
@@ -53,6 +68,10 @@ class GuessWord(BoxLayout):
             self.mutatedWord[idx] = ""
 
         self.rv_words.data = self.populateData()
+
+    def restartGame(self):
+        self.pb_score.value = 0
+        self.playAgain()
 
     def populateData(self):
         data = []
@@ -72,6 +91,10 @@ class Cell(BoxLayout):
         tb : TextInput = self.children[0]
         mutatedWord[idx] = tb.text
         print(mutatedWord)
+
+
+class MyPopup(Popup):
+    pass
 
 
 class GuessWordApp(App):
