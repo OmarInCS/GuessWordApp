@@ -6,8 +6,9 @@
     rv_words: rv_words
     pb_score: pb_score
     orientation: 'vertical'
-    padding: 2
+#    padding: 2
     spacing: 2
+    TitleBar:
     Label:
         text: str(int(pb_score.value))
         size_hint_y: 0.1
@@ -16,7 +17,7 @@
         id: pb_score
         size_hint_y: 0.1
         max: 500
-        value: 0
+        value: int(0)
     Label:
         id: lb_msg
         size_hint_y: 0.1
@@ -37,78 +38,9 @@
     TabBar:
 
 
-<TabBar@BoxLayout>:
-    orientation: "horizontal"
-    padding: [0, 0, 0, 5]
-    size_hint_y: 0.3
-    Label:
-    BoxLayout:
-        size_hint: None, None
-        size: self.parent.height/3, self.parent.height/3
-        canvas:
-            Color:
-                rgb: (241/256, 196/256, 15/256)
-            Ellipse:
-                pos: self.center_x - self.height/2, self.center_y - self.height/2
-                size: self.height, self.height
-                angle_start: 0
-                angle_end: 360
-        Button:
-            id: bt_again
-            size_hint: None, None
-            size: self.parent.height, self.parent.height
-            background_color: 0, 0, 0, 0
-            text: 'Restart\nGame'
-            halign: "center"
-            font_size: self.height/5
-            on_press: app.root.restartGame()
-    Label:
-    BoxLayout:
-        size_hint: None, None
-        size: self.parent.height/3, self.parent.height/3
-        canvas:
-            Color:
-                rgb: (52/256, 152/256, 219/256)
-            Ellipse:
-                pos: self.center_x - self.height/2, self.center_y - self.height/2
-                size: self.height, self.height
-                angle_start: 0
-                angle_end: 360
-        Button:
-            id: bt_answer
-            size_hint: None, None
-            size: self.parent.height, self.parent.height
-            background_color: 0, 0, 0, 0
-            text: 'Show\nAnswer'
-            halign: "center"
-            font_size: self.height/5
-            on_press: app.root.showAnswer()
-    Label:
-    BoxLayout:
-        size_hint: None, None
-        size: self.parent.height/3, self.parent.height/3
-        canvas:
-            Color:
-                rgb: (46/256, 204/256, 113/256)
-            Ellipse:
-                pos: self.center_x - self.height/2, self.center_y - self.height/2
-                size: self.height, self.height
-                angle_start: 0
-                angle_end: 360
-        Button:
-            id: bt_check
-            size_hint: None, None
-            size: self.parent.height, self.parent.height
-            background_color: 0, 0, 0, 0
-            text: 'Check\nAnswer'
-            halign: "center"
-            font_size: self.height/5
-            on_press: app.root.checkAnswer()
-    Label:
-
-
 <Cell>:
     text: ""
+    is_readonly: True
     bg_color: 1, 1, 1
     canvas.before:
         Color:
@@ -119,14 +51,16 @@
             radius: [10]
     TextInput:
         text: root.text
+        readonly: root.is_readonly
+        is_focusable: (not root.is_readonly)
         background_color: 0,0,0,0
         halign: "center"
         multiline: False
         padding: [2, self.height / 2.0 - self.line_height / 2.0]
         font_size: self.height/2
         write_tab: False
-        on_text: root.didSelectCell(root.idx, app.root.mutatedWord)
-        on_text_validate: app.root.checkAnswer()
+        on_text: root.didSelectCell(root.idx, app.root.get_screen("game").mutatedWord)
+        on_text_validate: app.root.get_screen("game").checkAnswer()
 
 
 <MyPopup>:
@@ -139,4 +73,4 @@
         Button:
             text: 'Accept'
             size_hint_y: 0.2
-            on_release: app.root.confirmShowAnswer(root)
+            on_press: app.root.get_screen("game").confirmShowAnswer(root)

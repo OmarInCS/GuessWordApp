@@ -1,0 +1,25 @@
+
+<TitleBar@GridLayout>:
+    size_hint_y: None
+    size: 0, 50
+    cols: 3
+    rows: 1
+    padding: 5, 0, 5, 5
+    canvas:
+        Color:
+            rgb: (52/256, 152/256, 219/256)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        size_hint_x: 0.1
+    Label:
+#        text: "[b]"+app.root.current+"[/b]"
+#        font_size: self.height
+#        markup: True
+    Button:
+        size_hint: None, 1
+        size: 30, 0
+        background_normal: "images/menu-26.png"
+        background_down: "atlas://data/images/defaulttheme/button_disabled"
+        on_release: app.root.get_screen("game").show_scores_history()

@@ -1,0 +1,90 @@
+
+<TabBar@BoxLayout>:
+    orientation: "horizontal"
+    padding: [0, 0, 0, 5]
+    size_hint_y: 0.3
+    Label:
+    BoxLayout:
+        size_hint: None, None
+        size: self.parent.height/3, self.parent.height/3
+        canvas:
+            Color:
+                rgb: (231/256, 76/256, 60/256)
+            Ellipse:
+                pos: self.center_x - self.height/2, self.center_y - self.height/2
+                size: self.height, self.height
+                angle_start: 0
+                angle_end: 360
+        Button:
+            id: bt_again
+            size_hint: None, None
+            size: self.parent.height, self.parent.height
+            background_color: 0, 0, 0, 0
+            text: 'Restart\nGame'
+            halign: "center"
+            font_size: self.height/5
+            on_press: app.root.get_screen("game").restartGame()
+    Label:
+    BoxLayout:
+        size_hint: None, None
+        size: self.parent.height/3, self.parent.height/3
+        canvas:
+            Color:
+                rgb: (52/256, 152/256, 219/256)
+            Ellipse:
+                pos: self.center_x - self.height/2, self.center_y - self.height/2
+                size: self.height, self.height
+                angle_start: 0
+                angle_end: 360
+        Button:
+            id: bt_answer
+            size_hint: None, None
+            size: self.parent.height, self.parent.height
+            background_color: 0, 0, 0, 0
+            text: 'Show\nAnswer'
+            halign: "center"
+            font_size: self.height/5
+            on_press: app.root.get_screen("game").showAnswer()
+    Label:
+    BoxLayout:
+        size_hint: None, None
+        size: self.parent.height/3, self.parent.height/3
+        canvas:
+            Color:
+                rgb: (241/256, 196/256, 15/256)
+            Ellipse:
+                pos: self.center_x - self.height/2, self.center_y - self.height/2
+                size: self.height, self.height
+                angle_start: 0
+                angle_end: 360
+        Button:
+            id: bt_save
+            size_hint: None, None
+            size: self.parent.height, self.parent.height
+            background_color: 0, 0, 0, 0
+            text: 'Save\nScore'
+            halign: "center"
+            font_size: self.height/5
+            on_press: app.root.get_screen("game").save_score()
+    Label:
+    BoxLayout:
+        size_hint: None, None
+        size: self.parent.height/3, self.parent.height/3
+        canvas:
+            Color:
+                rgb: (46/256, 204/256, 113/256)
+            Ellipse:
+                pos: self.center_x - self.height/2, self.center_y - self.height/2
+                size: self.height, self.height
+                angle_start: 0
+                angle_end: 360
+        Button:
+            id: bt_check
+            size_hint: None, None
+            size: self.parent.height, self.parent.height
+            background_color: 0, 0, 0, 0
+            text: 'Check\nAnswer'
+            halign: "center"
+            font_size: self.height/5
+            on_press: app.root.get_screen("game").checkAnswer()
+    Label:
